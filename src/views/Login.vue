@@ -1,8 +1,8 @@
 <template>
 	<default-layout>
 		<div class="flex justify-center items-center h-full">
-			<div class="w-full lg:w-1/2 xl:w-2/5">
-				<div class="relative z-30 max-w-md mx-auto px-4 py-8 lg:px-8 lg:py-10 shadow-md bg-gray-100 rounded-lg">
+			<div class="w-full lg:w-1/2 xl:w-2/5 h-full md:h-auto">
+				<div class="relative z-30 max-w-md mx-auto px-4 py-8 lg:px-8 lg:py-10 shadow-md bg-gray-100 md:rounded-lg h-full md:h-auto">
 					<div>
 						<div class="flex items-baseline justify-between">
 							<h1 class="text-xl lg:text-2xl font-bold text-gray-800 tracking-wider">
