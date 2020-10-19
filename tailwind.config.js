@@ -1,6 +1,8 @@
 module.exports = {
   future: {},
-  purge: [],
+  purge: [
+    './views/**'
+  ],
   theme: {
     extend: {},
   },
