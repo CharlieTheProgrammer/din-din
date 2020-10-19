@@ -2,9 +2,12 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './routes'
 
-
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
+
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
+import * as validationRules from './providers/Validations';
+
 import { rtdbPlugin } from 'vuefire';
 
 import './assets/css/index.css';
@@ -48,6 +51,8 @@ Vue.config.productionTip = false;
 
 Vue.use(rtdbPlugin);
 
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
 
 new Vue({
 	render: (h) => h(App),
