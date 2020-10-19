@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <h1>This is the landing page. Show when users are not logged in.</h1>
-    <p>If user is logged in redirect them to the app screen.</p>
-  </div>
+  <default-layout>
+    <div>
+      <h1>This is the landing page. Show when users are not logged in.</h1>
+      <p>If user is logged in redirect them to the app screen.</p>
+    </div>
+  </default-layout>
 </template>
 
 <script>

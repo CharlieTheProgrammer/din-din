@@ -17,18 +17,16 @@ var firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-const authentication = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
-const auth = () => authentication.signInWithPopup(provider);
+const auth = firebase.auth();
 
-authentication.onAuthStateChanged((user, err) => {
-	if (user) {
-		console.log('Logged in sucessfully', user);
-	} else {
-		console.log('AN error occurred with login.', err);
-		authentication.signOut();
-	}
+//
+firebase.getCurrentUser = () => {
+	return new Promise((resolve, reject) => {
+		const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+			unsubscribe();
+			resolve(user);
+		}, reject);
+	});
+};
 
-});
-
-export { db, auth };
+export { firebase, db, auth };

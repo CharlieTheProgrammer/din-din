@@ -1,17 +1,19 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-    <!-- <Blank/> -->
-  </div>
+	<component :is="layout">
+		<router-view :layout.sync="layout" />
+	</component>
 </template>
 
 <script>
 
 export default {
-  name: "App",
+	name: 'App',
+	data() {
+		return {
+			layout: 'div',
+		};
+	},
 };
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
