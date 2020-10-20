@@ -24,11 +24,13 @@ firebase.getCurrentUser = () => {
 	return new Promise((resolve, reject) => {
 		const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
 			unsubscribe();
-			window.user = {
-				id: user.uid,
-				email: user.email,
-				displayName: user.displayName
-			};
+			if (user) {
+				window.user = {
+					id: user.uid,
+					email: user.email,
+					displayName: user.displayName
+				};
+			}
 			resolve(user);
 		}, reject);
 	});

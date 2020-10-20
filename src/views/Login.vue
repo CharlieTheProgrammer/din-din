@@ -17,6 +17,7 @@
 					<ValidationObserver v-slot="{ handleSubmit }">
 						<form class="mt-6 lg:mt-8" @submit.prevent="handleSubmit(login)">
 							<div class="space-y-4">
+								<span class="text-red-500 text-xs" v-show="loginError">Your login information was not recognized. Please try again.</span>
 								<div class="block">
 									<ValidationProvider name="username" rules="required|email" v-slot="{ touched, failed }">
 										<div class="relative bg-gray-50 rounded border border-gray-500 px-2 transition-all ease-out duration-300 focus-within:bg-gray-800 focus-within:border-gray-400">
@@ -113,14 +114,19 @@ export default {
 			username: '',
 			password: '',
 			submitted: false,
+			loginError: '',
 		};
 	},
 	methods: {
 		async login() {
 			try {
 				await auth.signInWithEmailAndPassword(this.username, this.password);
+				this.loginError = false;
 				this.$router.push('/dashboard');
 			} catch (error) {
+				if (error.code === 'auth/wrong-password') {
+					this.loginError = true;
+				}
 				console.log(error);
 			}
 		},
@@ -128,7 +134,11 @@ export default {
 			try {
 				const provider = new firebase.auth.GoogleAuthProvider();
 				await auth.signInWithPopup(provider);
+				this.loginError = false;
 			} catch (error) {
+				if (error.code === 'auth/wrong-password') {
+					this.loginError = true;
+				}
 				console.log(error);
 			}
 		},
@@ -136,7 +146,11 @@ export default {
 			try {
 				const provider = new firebase.auth.FacebookAuthProvider();
 				await auth.signInWithPopup(provider);
+				this.loginError = false;
 			} catch (error) {
+				if (error.code === 'auth/wrong-password') {
+					this.loginError = true;
+				}
 				console.log(error);
 			}
 		},
