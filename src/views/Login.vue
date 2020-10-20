@@ -135,6 +135,7 @@ export default {
 				const provider = new firebase.auth.GoogleAuthProvider();
 				await auth.signInWithPopup(provider);
 				this.loginError = false;
+				this.$router.push('/dashboard');
 			} catch (error) {
 				if (error.code === 'auth/wrong-password') {
 					this.loginError = true;
@@ -147,6 +148,7 @@ export default {
 				const provider = new firebase.auth.FacebookAuthProvider();
 				await auth.signInWithPopup(provider);
 				this.loginError = false;
+				this.$router.push('/dashboard');
 			} catch (error) {
 				if (error.code === 'auth/wrong-password') {
 					this.loginError = true;
