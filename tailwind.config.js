@@ -1,7 +1,8 @@
 module.exports = {
   future: {},
   purge: [
-    './views/**'
+    './src/views/**/*.vue',
+    './public/**/*.html',
   ],
   theme: {
     extend: {},
