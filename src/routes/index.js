@@ -6,6 +6,8 @@ import Login from '../views/Login';
 import Register from '../views/Register';
 import Landing from '../views/Landing';
 import Dashboard from '../views/Dashboard';
+import Recipes from '../views/Recipes';
+import Recipe from '../views/Recipe';
 
 // Other imports
 import { firebase } from '../providers/Fire';
@@ -32,12 +34,32 @@ let router = new VueRouter({
 		},
 		{
 			path: '/dashboard',
-			name: '/dashboard',
+			name: 'dashboard',
 			component: Dashboard,
 			meta: {
 				requiresAuth: true,
 			},
 		},
+		{
+			path: '/recipes/:id',
+			name: 'recipe',
+			component: Recipe,
+			meta: {
+				requiresAuth: true,
+			},
+			props: (route) => ({
+				recipe: {},
+				...route.params
+			})
+		},
+		{
+			path: '/recipes',
+			name: 'recipes',
+			component: Recipes,
+			meta: {
+				requiresAuth: true,
+			}
+		}
 	],
 });
 

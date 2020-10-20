@@ -14,43 +14,45 @@
 							With your valid account to continue.
 						</p>
 					</div>
-					<form action="#" class="mt-6 lg:mt-8">
-						<div class="space-y-4">
-							<div class="block">
-								<ValidationProvider name="username" rules="required|email" v-slot="{ touched, failed }">
-									<div class="relative bg-gray-50 rounded border border-gray-500 px-2 transition-all ease-out duration-300 focus-within:bg-gray-800 focus-within:border-gray-400">
-										<label for="username" class="absolute top-0 px-1 lg:text-sm transform transition-all ease-out duration-300 translate-y-3 text-gray-500" v-show="!username"
-											>Enter your email or phone number</label
-										>
-										<input id="username" type="text" autocomplete="off" value="" class="relative w-full bg-transparent outline-none px-1 py-3 z-10" v-model="username" />
-									</div>
-									<span class="text-red-500 text-xs" v-show="touched && failed">Please enter a valid email or phone number</span>
-								</ValidationProvider>
-							</div>
+					<ValidationObserver v-slot="{ handleSubmit }">
+						<form class="mt-6 lg:mt-8" @submit.prevent="handleSubmit(login)">
+							<div class="space-y-4">
+								<div class="block">
+									<ValidationProvider name="username" rules="required|email" v-slot="{ touched, failed }">
+										<div class="relative bg-gray-50 rounded border border-gray-500 px-2 transition-all ease-out duration-300 focus-within:bg-gray-800 focus-within:border-gray-400">
+											<label for="username" class="absolute top-0 px-1 lg:text-sm transform transition-all ease-out duration-300 translate-y-3 text-gray-500" v-show="!username"
+												>Enter your email or phone number</label
+											>
+											<input id="username" type="text" autocomplete="off" value="" class="relative w-full bg-transparent outline-none px-1 py-3 z-10" v-model="username" />
+										</div>
+										<span class="text-red-500 text-xs" v-show="(submitted || touched) && failed">Please enter a valid email or phone number</span>
+									</ValidationProvider>
+								</div>
 
-							<div class="block">
-								<ValidationProvider name="password" rules="required" v-slot="{ touched, failed }">
-									<div class="relative bg-gray-50 rounded border border-gray-500 px-2 transition-all ease-out duration-300 focus-within:bg-gray-800 focus-within:border-gray-400">
-										<label for="password" class="absolute top-0 px-1 lg:text-sm transform transition-all ease-out duration-300 translate-y-3 text-gray-500" v-show="!password"
-											>Enter your password</label
-										>
-										<input id="password" type="text" autocomplete="off" value="" class="relative w-full bg-transparent outline-none px-1 py-3 z-10" v-model="password" />
-									</div>
-									<span class="text-red-500 text-xs" v-show="touched && failed">Please enter a valid email or phone number</span>
-								</ValidationProvider>
-							</div>
+								<div class="block">
+									<ValidationProvider name="password" rules="required" v-slot="{ touched, failed }">
+										<div class="relative bg-gray-50 rounded border border-gray-500 px-2 transition-all ease-out duration-300 focus-within:bg-gray-800 focus-within:border-gray-400">
+											<label for="password" class="absolute top-0 px-1 lg:text-sm transform transition-all ease-out duration-300 translate-y-3 text-gray-500" v-show="!password"
+												>Enter your password</label
+											>
+											<input id="password" type="text" autocomplete="off" value="" class="relative w-full bg-transparent outline-none px-1 py-3 z-10" v-model="password" />
+										</div>
+										<span class="text-red-500 text-xs" v-show="(submitted || touched) && failed">Please enter a valid email or phone number</span>
+									</ValidationProvider>
+								</div>
 
-							<div class="py-3">
-								<button
-									type="button"
-									class="w-full inline-flex items-center justify-center rounded-lg overflow-hidden px-4 py-3 bg-indigo-600 text-white transition ease-out duration-300 uppercase font-semibold hover:bg-indigo-700 focus:outline-none"
-									@click="login"
-								>
-									continue
-								</button>
+								<div class="py-3">
+									<button
+										type="submit"
+										class="w-full inline-flex items-center justify-center rounded-lg overflow-hidden px-4 py-3 bg-indigo-600 text-white transition ease-out duration-300 uppercase font-semibold hover:bg-indigo-700 focus:outline-none"
+										@click="submitted = true"
+									>
+										continue
+									</button>
+								</div>
 							</div>
-						</div>
-					</form>
+						</form>
+					</ValidationObserver>
 					<div class="flex items-center justify-center py-4 xl:py-6 text-xs">
 						<span class="w-14 border-b border-gray-500"></span> <span class="px-2">or with</span> <span class="w-14 border-b border-gray-500"></span>
 					</div>
@@ -110,6 +112,7 @@ export default {
 		return {
 			username: '',
 			password: '',
+			submitted: false,
 		};
 	},
 	methods: {

@@ -11,19 +11,19 @@
 					<router-link to="/" class="ml-2 font-bold font-serif text-gray-600">DinDin</router-link>
 				</div>
 
-				<router-link to="/login" class="hidden md:block" v-show="auth.currentUser || $route.path !== '/login'">Login</router-link>
+				<router-link to="/login" class="hidden md:block" v-show="window.user.id || $route.path !== '/login'">Login</router-link>
 				<Logout></Logout>
 			</nav>
 		</header>
 
 		<div id="overlay" class="absolute bg-black h-screen w-full opacity-50" @click="showSidebar = !showSidebar" v-show="showSidebar"></div>
 		<transition name="fade">
-			<aside class="absolute bg-gray-900 w-2/3 h-screen text-gray-500 p-5" v-show="showSidebar">
+			<aside class="absolute bg-gray-900 w-2/3 h-screen text-gray-500 p-5 z-50" v-show="showSidebar">
 				<div class="flex justify-center">
 					<a href="#" class="px-6 py-3 my-6 bg-teal-600 text-white text-sm font-semibold rounded-xl tracking-wide text-center hover:bg-teal-500">Sign Up / Log In</a>
 					<!-- Nav goes here -->
 				</div>
-				<a href="#" class="block mt-5 hover:text-gray-400 text-lg">My Recipes</a>
+				<router-link to="/recipes" class="block mt-5 hover:text-gray-400 text-lg">My Recipes</router-link>
 				<a href="#" class="block mt-5 hover:text-gray-400 text-lg">Menu of the Week</a>
 			</aside>
 		</transition>
@@ -39,23 +39,12 @@
 </template>
 
 <script>
-import { auth } from '../../providers/Fire';
-
 export default {
 	name: 'Default-Layout',
 	data() {
 		return {
-			auth,
 			showSidebar: false,
 		};
-	},
-	mounted() {
-		// setTimeout(() => {
-		// This function is not async. If it runs before firebase is initialized, it will return null.
-		// What we need to do is hook it up to the authstatechange function, but then the question becomes,
-		//
-		// console.log(auth.currentUser);
-		// }, 2000);
 	},
 };
 </script>
