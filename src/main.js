@@ -1,14 +1,16 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from './routes'
+import router from './routes';
 
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
+import isObject from 'lodash/isObject';
 
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import * as validationRules from './providers/Validations';
 
 import { rtdbPlugin } from 'vuefire';
+import { Models } from './models';
 
 import './assets/css/index.css';
 
@@ -47,14 +49,27 @@ requireComponent.keys().forEach((fileName) => {
 	);
 });
 
-Vue.config.productionTip = false;
+// Serialize function for vuefire
+// This will run through data returned from firebase and convert it to the appropriate model
+const serialize = (snapshot) => {
+	const modelName = snapshot.ref.parent.key; // This will  get "recipe"
+	const value = snapshot.val();
+	// if the value is a primitive, we create an object instead and assign the .value
+	let doc = isObject(value) ? value : Object.defineProperty({}, '.value', { value });
+	// you could change `.key` by `id` if you want to be able to write
+	doc = Models[modelName].turnAllIntoModels([doc])[0];
+	Object.defineProperty(doc, '.key', { value: snapshot.key });
+	return doc;
+};
 
-Vue.use(rtdbPlugin);
+Vue.use(rtdbPlugin, { serialize });
+
+Vue.config.productionTip = false;
 
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
 new Vue({
 	render: (h) => h(App),
-	router
+	router,
 }).$mount('#app');

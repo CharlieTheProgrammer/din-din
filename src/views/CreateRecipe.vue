@@ -27,7 +27,11 @@
 
 		<div class="flex flex-col items-center">
 			<button class="px-4 py-3 bg-green-400 mt-4 rounded-lg text-white" @click="saveRecipe">Add recipe</button>
-			<router-link to="/recipes" class="block px-4 py-3 mt-8 rounded-lg bg-blue-400 border border-blue-400 opacity-75 text-white hover:border-blue-500 hover:bg-blue-500 hover:text-white">Done Adding Recipes</router-link>
+			<router-link
+				to="/recipes"
+				class="block px-4 py-3 mt-8 rounded-lg bg-blue-400 border border-blue-400 opacity-75 text-white hover:border-blue-500 hover:bg-blue-500 hover:text-white"
+				>Done Adding Recipes</router-link
+			>
 		</div>
 
 		<div class="mt-10 ">
@@ -41,6 +45,7 @@ import { Recipe } from '../models/Recipe';
 import { db } from '../providers/Fire';
 import axios from '../providers/Http';
 import { slice, debounce } from 'lodash';
+import { firebase } from '../providers/Fire';
 
 export default {
 	name: 'CreateRecipe',
@@ -52,16 +57,19 @@ export default {
 			meals: [],
 		};
 	},
-	firebase: {
-		recipes: db.ref('recipes'),
+	async mounted() {
+		let recipes = await this.$rtdbBind(
+			'recipes',
+			db
+				.ref('recipe')
+				.orderByChild('user_id')
+				.equalTo(window.user && window.user.id)
+		);
 	},
 	methods: {
-		getRecipes() {
-			recipes = Recipe.get();
-		},
 		async saveRecipe() {
 			try {
-				let recipe = await Recipe.create(this.name);
+				let recipe = new Recipe(this.name).save();
 				this.name = '';
 			} catch (error) {
 				console.log(error);

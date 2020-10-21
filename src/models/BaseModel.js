@@ -2,39 +2,45 @@ import { db } from '../providers/Fire';
 import map from 'lodash/map';
 
 export class BaseModel {
-  constructor(modelName) {
-    this.name = 'recipes';
-  }
+	constructor(modelName) {
+		this.name = 'recipes';
+	}
 
+	getKey() {
+		return this['.key'];
+	}
 
-  getKey() {
-    return this['.key'];
-  }
-
-  async save() {
-    if (this.getKey()) {
-      return this.constructor.updateOne(this);
-    } else {
-      return this.constructor.insertOne(this);
-    }
+	async save() {
+		if (this.getKey()) {
+			return this.constructor.updateOne(this);
+		} else {
+			return this.constructor.insertOne(this);
+		}
 	}
 
 	async delete() {
 		return this.constructor.deleteOne(this);
-  }
-  
+	}
 
-  static turnAllIntoModels(objArr) {
-    return map(objArr, (element, index) => {
-      let modelInstance = new this(element);
-      return Object.defineProperty(modelInstance, '.key', {
-				value: index,
-				enumerable: false,
-			});
-    });
-  }
+	static turnAllIntoModels(objArr) {
+		return map(objArr, (element, index) => {
+			let modelInstance = new this(element);
+			return this.addNonEnumerableIdToModel(index, modelInstance);
+		});
+	}
 
+	static turnOneIntoModel(obj, key) {
+		let modelInstance = new this(obj);
+		return this.addNonEnumerableIdToModel(key, modelInstance);
+	}
 
+	static addNonEnumerableIdToModel(id, model) {
+		return Object.defineProperty(model, '.key', {
+			value: id,
+			enumerable: false,
+			configurable: true,
+		});
+	}
 
 	/**
 	 * Returns a count of the number of documents in a collection
@@ -52,8 +58,8 @@ export class BaseModel {
 	 */
 	static async deleteOne(doc) {
 		try {
-      const modelName = this.name.toLowerCase();
-      return db.ref(modelName + '/' + doc['.key']).remove();
+			const modelName = this.name.toLowerCase();
+			return db.ref(modelName + '/' + doc['.key']).remove();
 		} catch (error) {
 			console.log('Error occured while performing operation', error);
 		}
@@ -111,7 +117,6 @@ export class BaseModel {
 	 */
 	static async insertOne(doc) {
 		try {
-      debugger;
 			const modelName = this.name.toLowerCase();
 			return db.ref(modelName).push(doc);
 		} catch (error) {

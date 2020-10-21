@@ -18,8 +18,14 @@ export default {
 			loading: true,
 		};
 	},
-	firebase: {
-		recipes: db.ref('recipes'),
-	}
+	async created() {
+		let recipes = await this.$rtdbBind(
+			'recipes',
+			db
+				.ref('recipe')
+				.orderByChild('user_id')
+				.equalTo(window.user && window.user.id)
+		);
+	},
 };
 </script>

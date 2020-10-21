@@ -77,7 +77,7 @@ export default {
 	methods: {
 		async deleteRecipe(recipe) {
 			try {
-				await Recipe.delete(recipe);
+				await recipe.delete();
 			} catch (error) {
 				console.log(error);
 			}
