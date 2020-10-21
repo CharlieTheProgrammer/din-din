@@ -36,4 +36,14 @@ firebase.getCurrentUser = () => {
 	});
 };
 
+
+firebase.auth().onAuthStateChanged((user) => {
+	if (user) {
+		window.user = {
+			id: user.uid,
+			email: user.email,
+			displayName: user.displayName
+		};
+	}
+});
 export { firebase, db, auth };

@@ -17,6 +17,7 @@
 					<ValidationObserver v-slot="{ handleSubmit }">
 						<form class="mt-6 lg:mt-8" @submit.prevent="handleSubmit(register)">
 							<div class="space-y-4">
+								<span class="text-red-500 text-xs" v-show="loginError">{{ loginError }}</span>
 								<div class="block">
 									<ValidationProvider name="username" rules="required|email" v-slot="{ touched, failed }">
 										<div class="relative bg-gray-50 rounded border border-gray-500 px-2 transition-all ease-out duration-300 focus-within:bg-gray-800 focus-within:border-gray-400">
@@ -70,17 +71,23 @@ export default {
 			firstName: '',
 			lastName: '',
 			email: '',
-			submitted: false
+			submitted: false,
+			loginError: false,
 		};
 	},
 	methods: {
 		async register() {
 			try {
-				await auth.createUserWithEmailAndPassword(this.username, this.password);
+				const credentials = await auth.createUserWithEmailAndPassword(this.username, this.password);
+				this.loginError = false;
+				this.$router.push('/dashboard');
 			} catch (error) {
+				if (error.code.includes('auth')) {
+					this.loginError = error.message;
+				}
 				console.log(error);
 			}
-		}
+		},
 	},
 };
 </script>

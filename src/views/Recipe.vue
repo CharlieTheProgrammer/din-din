@@ -8,13 +8,13 @@
 						<span class="bg-teal-200 text-teal-700 text-xs px-3 py-1 rounded-full inline-block uppercase font-semibold tracking-wider" v-if="false">
 							Tag
 						</span>
-						<img src="../assets/img/photo-camera.svg" alt="Photo Camera Icon" class="h-4 w-4 cursor-pointer ml-auto" />
+						<img src="../assets/img/photo-camera.svg" alt="Photo Camera Icon" class="h-4 w-4 cursor-pointer ml-auto" v-if="false"/>
 
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 20 20"
 							fill="currentColor"
-							class="h-6 w-6 ml-4 cursor-pointer text-red-600"
+							class="h-6 w-6 ml-4 cursor-pointer text-red-600 ml-auto"
 							title="Delete Recipe"
 							@click="deleteRecipe(recipe)"
 						>

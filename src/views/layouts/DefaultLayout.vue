@@ -11,7 +11,7 @@
 					<router-link to="/" class="ml-2 font-bold font-serif text-gray-600">DinDin</router-link>
 				</div>
 
-				<router-link to="/login" class="hidden md:block" v-show="user || $route.path !== '/login'">Login</router-link>
+				<router-link to="/login" class="hidden md:block" v-show="$route.path !== '/login'">Login</router-link>
 				<Logout></Logout>
 			</nav>
 		</header>
