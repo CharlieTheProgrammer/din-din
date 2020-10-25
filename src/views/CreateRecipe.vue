@@ -1,37 +1,39 @@
 <template>
 	<div>
-		<div id="field-wrapper" class="mt-6">
-			<label for="recipe" class="block text-sm mb-2 text-gray-800">What are your favorite recipes?</label>
-			<input
-				type="text"
-				name="recipe"
-				id="recipe"
-				class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-				placeholder="Enter recipe name"
-				max="255"
-				v-model="name"
-				@keyup.enter="saveRecipe"
-			/>
-		</div>
+		<div class="rounded-xl shadow-xl p-4 mt-6 bg-primary-light">
+			<div id="field-wrapper" class="mt-6">
+				<label for="recipe" class="block text-2xl mb-2 text-gray-800">What are your favorite recipes?</label>
+				<input
+					type="text"
+					name="recipe"
+					id="recipe"
+					class="shadow-sm appearance-none border rounded w-full py-2 px-3 mt-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					placeholder="Enter recipe name"
+					max="255"
+					v-model="name"
+					@keyup.enter="saveRecipe"
+				/>
+			</div>
 
-		<!-- Autocomplete Recipe -->
-		<div id="autocomplete">
-			<ul class="bg-white py-1" v-show="name.length > 0 && meals.length > 0">
-				<li class="py-2 cursor-pointer hover:bg-gray-300 rounded overflow-hidden" v-for="meal in meals" :key="meal.idMeal" @click="selectRecipe(meal)">
-					<span class="pl-3">
-						{{ meal.strMeal }}
-					</span>
-				</li>
-			</ul>
-		</div>
+			<!-- Autocomplete Recipe -->
+			<div id="autocomplete">
+				<ul class="bg-white py-1" v-show="name.length > 0 && meals.length > 0">
+					<li class="py-2 cursor-pointer hover:bg-gray-300 rounded overflow-hidden" v-for="meal in meals" :key="meal.idMeal" @click="selectRecipe(meal)">
+						<span class="pl-3">
+							{{ meal.strMeal }}
+						</span>
+					</li>
+				</ul>
+			</div>
 
-		<div class="flex flex-col items-center">
-			<button class="px-4 py-3 bg-green-400 mt-4 rounded-lg text-white" @click="saveRecipe">Add recipe</button>
-			<router-link
-				to="/recipes"
-				class="block px-4 py-3 mt-8 rounded-lg bg-blue-400 border border-blue-400 opacity-75 text-white hover:border-blue-500 hover:bg-blue-500 hover:text-white"
-				>Done Adding Recipes</router-link
-			>
+			<div class="flex items-center mt-4 justify-around">
+				<button class="btn bg-secondary text-white" @click="saveRecipe">Add recipe</button>
+				<router-link
+					to="/recipes"
+					class="block px-4 py-3 rounded-lg border text-primary border-secondary-light bg-secondary-light hover:border-primary hover:bg-primary-light hover:text-primary"
+					>Done Adding Recipes</router-link
+				>
+			</div>
 		</div>
 
 		<div class="mt-10 ">
@@ -45,7 +47,6 @@ import { Recipe } from '../models/Recipe';
 import { db } from '../providers/Fire';
 import axios from '../providers/Http';
 import { slice, debounce } from 'lodash';
-import { firebase } from '../providers/Fire';
 
 export default {
 	name: 'CreateRecipe',
@@ -58,7 +59,7 @@ export default {
 		};
 	},
 	async mounted() {
-		let recipes = await this.$rtdbBind(
+		await this.$rtdbBind(
 			'recipes',
 			db
 				.ref('recipe')
@@ -69,7 +70,7 @@ export default {
 	methods: {
 		async saveRecipe() {
 			try {
-				let recipe = new Recipe(this.name).save();
+				new Recipe(this.name).save();
 				this.name = '';
 			} catch (error) {
 				console.log(error);
