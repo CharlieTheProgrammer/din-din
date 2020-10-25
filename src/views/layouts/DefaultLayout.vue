@@ -1,6 +1,6 @@
 <template>
-	<div class="flex flex-col h-screen md:p-2 text-gray-800 bg-gray-50">
-		<header class="bg-gray-50">
+	<div class="flex flex-col min-h-screen text-gray-800 bg-gray-100">
+		<header class="bg-primary-light shadow-md">
 			<nav class="flex justify-between items-center py-2">
 				<div class="flex items-center">
 					<div class="cursor-pointer md:hidden" @click="showSidebar = !showSidebar">
@@ -8,7 +8,7 @@
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
 						</svg>
 					</div>
-					<router-link to="/" class="ml-2 font-bold font-serif text-gray-600">DinDin</router-link>
+					<router-link to="/" class="ml-2 font-bold font-serif text-gray-800">DinDin</router-link>
 				</div>
 
 				<router-link to="/login" class="hidden md:block" v-show="$route.path !== '/login'">Login</router-link>
@@ -24,15 +24,15 @@
 					<!-- Nav goes here -->
 				</div>
 				<router-link to="/recipes" class="block mt-5 hover:text-gray-400 text-lg">My Recipes</router-link>
-				<a href="#" class="block mt-5 hover:text-gray-400 text-lg">Menu of the Week</a>
+				<router-link to="/weekly-menu" class="block mt-5 hover:text-gray-400 text-lg">Menu of the Week</router-link>
 			</aside>
 		</transition>
 
-		<main class="flex-1 foodie-background">
+		<main class="flex-1 flex flex-col">
 			<slot />
 		</main>
 
-		<footer class="flex justify-center py-2" style="background-color: #dbe4e5;">
+		<footer class="flex justify-center py-2">
 			@ Charlie the Programmer
 		</footer>
 	</div>

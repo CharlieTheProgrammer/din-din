@@ -3,9 +3,7 @@ import map from 'lodash/map';
 import { DateTime } from '../providers/DateTime';
 
 export class BaseModel {
-	constructor(modelName) {
-		if (!this.created_at) this.created_at = DateTime().utc().format();
-		if (!this.updated_at) this.updated_at = null;
+	constructor() {
 	}
 
 	getKey() {

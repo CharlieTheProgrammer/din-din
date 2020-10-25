@@ -8,6 +8,7 @@ import Landing from '../views/Landing';
 import Dashboard from '../views/Dashboard';
 import Recipes from '../views/Recipes';
 import Recipe from '../views/Recipe';
+import MenuOfTheWeek from '../views/components/MenuOfTheWeek';
 
 // Other imports
 import { firebase } from '../providers/Fire';
@@ -56,6 +57,14 @@ let router = new VueRouter({
 			path: '/recipes',
 			name: 'recipes',
 			component: Recipes,
+			meta: {
+				requiresAuth: true,
+			}
+		},
+		{
+			path: '/weekly-menu',
+			name: 'weekly-menu',
+			component: MenuOfTheWeek,
 			meta: {
 				requiresAuth: true,
 			}
