@@ -1,5 +1,5 @@
 .btn {
-  @apply px-4 py-3 rounded-lg mr-4;
+  @apply px-4 py-3 rounded-lg;
 }
 
 .btn-sm {
