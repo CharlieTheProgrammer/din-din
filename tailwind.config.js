@@ -5,7 +5,14 @@ module.exports = {
     './public/**/*.html',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'primary': '#31525B',
+        'primary-light': '#FAE6B1',
+        'secondary': '#FFA101',
+        'secondary-light': '#FAE6B1'
+      }
+    },
   },
   variants: {},
   plugins: [],
