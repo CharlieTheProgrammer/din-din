@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<div class="px-6 mt-4">
-			<div class="bg-white p-4 rounded-lg shadow-lg">
+		<div class="px-6 mt-4 text-purple-800">
+			<div class="bg-primary-light p-4 rounded-lg shadow-md">
 				<!-- Recipe metadata: stuff like food genre like Italian, Mexican, French, whether it's new or not -->
 				<div class="flex items-center justify-between">
 					<span class="bg-teal-200 text-teal-700 text-xs px-3 py-1 rounded-full inline-block uppercase font-semibold tracking-wider" v-if="recipe.genre">
