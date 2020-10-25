@@ -12,6 +12,10 @@ import * as validationRules from './providers/Validations';
 import { rtdbPlugin } from 'vuefire';
 import { Models } from './models';
 
+
+import Autocomplete from '@trevoreyre/autocomplete-vue'
+import '@trevoreyre/autocomplete-vue/dist/style.css'
+
 import './assets/css/index.css';
 
 // Globally Register Components
@@ -62,6 +66,7 @@ const serialize = (snapshot) => {
 };
 
 Vue.use(rtdbPlugin, { serialize });
+Vue.use(Autocomplete);
 
 Vue.config.productionTip = false;
 
