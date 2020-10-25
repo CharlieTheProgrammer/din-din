@@ -2,7 +2,7 @@
   <default-layout>
     <div class="mt-2 flex-1 flex flex-col p-2">
       <div>
-        <h1 class="text-3xl">Menu of the Week</h1>
+        <h1 class="text-3xl font-semibold">Menu of the Week</h1>
       </div>
 
       <div class="flex flex-col mt-2 flex-1">
@@ -83,10 +83,10 @@
       </div>
 
       <div class="flex justify-between mt-4">
-        <router-link :to="{ name: 'dashboard' }" class="btn btn-sm text-xs bg-primary-light text-purple-700">
+        <router-link :to="{ name: 'dashboard' }" class="btn btn-sm text-xs bg-teal-600 text-white">
           Add Recipes</router-link
         >
-        <button type="button" class="btn btn-sm text-xs bg-primary-light text-purple-700" @click="getRandomMenu">
+        <button type="button" class="btn btn-sm text-xs bg-teal-600 text-white" @click="getRandomMenu">
           Create a Random Menu
         </button>
       </div>

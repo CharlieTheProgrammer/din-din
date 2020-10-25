@@ -1,17 +1,17 @@
 <template>
 	<div class="flex flex-col min-h-screen text-gray-800 bg-gray-100">
-		<header class="bg-primary-light shadow-md">
+		<header class="shadow-md">
 			<nav class="flex justify-between items-center py-2">
 				<div class="flex items-center">
 					<div class="cursor-pointer md:hidden" @click="showSidebar = !showSidebar">
-						<svg class="h-6 w-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<svg class="h-6 w-6 text-teal-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
 						</svg>
 					</div>
-					<router-link to="/" class="ml-2 font-bold font-serif text-gray-800">DinDin</router-link>
+					<router-link to="/" class="ml-2 font-bold font-serif text-teal-600">DinDin</router-link>
 				</div>
 
-				<router-link to="/login" class="hidden md:block" v-show="$route.path !== '/login'">Login</router-link>
+				<router-link to="/login" class="hidden md:block" v-show="showLoginLink">Login</router-link>
 				<Logout></Logout>
 			</nav>
 		</header>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import {firebase} from '../../providers/Fire';
 export default {
 	name: 'Default-Layout',
 	data() {
@@ -47,6 +48,13 @@ export default {
 			user: window.user
 		};
 	},
+	computed: {
+		showLoginLink() {
+			if (this.$route.path !== '/login') return false;
+			if (window.user) return false;
+			return true;
+		}
+	}
 };
 </script>
 
