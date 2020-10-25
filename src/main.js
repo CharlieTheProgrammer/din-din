@@ -56,10 +56,9 @@ const serialize = (snapshot) => {
 	const value = snapshot.val();
 	// if the value is a primitive, we create an object instead and assign the .value
 	let doc = isObject(value) ? value : Object.defineProperty({}, '.value', { value });
-	// you could change `.key` by `id` if you want to be able to write
-	doc = Models[modelName].turnAllIntoModels([doc])[0];
-	Object.defineProperty(doc, '.key', { value: snapshot.key });
-	return doc;
+
+	if (!Models[modelName]) throw Error(`Model name '${modelName}' not found. Check the spelling and/or confirm the model is registered correctly.`);
+	return Models[modelName].turnOneIntoModel(doc, snapshot.key);
 };
 
 Vue.use(rtdbPlugin, { serialize });
