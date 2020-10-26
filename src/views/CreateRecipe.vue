@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="rounded-xl shadow-xl p-4 mt-6 bg-primary-light">
+  <default-layout>
+    <div class="rounded-xl shadow-xl p-4 bg-teal-50">
       <div id="field-wrapper" class="mt-6">
         <label for="recipe" class="block text-2xl mb-2 text-gray-800">What are your favorite recipes?</label>
         <input
@@ -44,7 +44,7 @@
     <div class="mt-10 ">
       <RecipeList :recipes="recipes" />
     </div>
-  </div>
+  </default-layout>
 </template>
 
 <script>
@@ -75,6 +75,7 @@
     methods: {
       async saveRecipe() {
         try {
+          if (this.name === "") return;
           new Recipe(this.name).save();
           this.name = "";
         } catch (error) {

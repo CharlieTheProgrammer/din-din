@@ -8,6 +8,7 @@ import Landing from '../views/Landing';
 import Dashboard from '../views/Dashboard';
 import Recipes from '../views/Recipes';
 import Recipe from '../views/Recipe';
+import CreateRecipe from '../views/CreateRecipe';
 import MenuOfTheWeek from '../views/components/MenuOfTheWeek';
 
 // Other imports
@@ -37,6 +38,14 @@ let router = new VueRouter({
 			path: '/dashboard',
 			name: 'dashboard',
 			component: Dashboard,
+			meta: {
+				requiresAuth: true,
+			},
+		},
+		{
+			path: '/recipe-create',
+			name: 'create-recipe',
+			component: CreateRecipe,
 			meta: {
 				requiresAuth: true,
 			},
