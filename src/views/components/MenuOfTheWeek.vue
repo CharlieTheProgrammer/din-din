@@ -2,7 +2,7 @@
   <default-layout>
     <div class="mt-2 flex-1 flex flex-col p-2">
       <div>
-        <h1 class="text-3xl font-semibold">Menu of the Week</h1>
+        <h1 class="text-3xl font-semibold italic">Menu of the Week</h1>
       </div>
 
       <div class="flex flex-col mt-2 flex-1">

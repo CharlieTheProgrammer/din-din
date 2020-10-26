@@ -121,7 +121,7 @@
                 ></path>
               </svg>
             </button>
-            <button
+            <!-- <button
               type="button"
               class="inline-flex items-center rounded-lg overflow-hidden p-2 bg-gray-800 transition ease-out duration-300 focus:outline-none hover:bg-gray-700"
               @click="loginWithFacebook"
@@ -137,7 +137,7 @@
                   fill="#fff"
                 ></path>
               </svg>
-            </button>
+            </button> -->
           </div>
         </div>
       </div>
@@ -155,7 +155,7 @@
         username: "",
         password: "",
         submitted: false,
-        loginError: ""
+        loginError: false
       };
     },
     methods: {
@@ -165,7 +165,7 @@
           this.loginError = false;
           this.$router.push("/dashboard");
         } catch (error) {
-          if (error.code === "auth/wrong-password") {
+          if (error.code.includes('auth')) {
             this.loginError = true;
           }
           console.log(error);

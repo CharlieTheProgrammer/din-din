@@ -24,17 +24,17 @@
 
     <div
       id="overlay"
-      class="absolute bg-black h-screen w-full opacity-50"
+      class="absolute bg-black h-screen w-full opacity-50 z-50"
       @click="showSidebar = !showSidebar"
       v-show="showSidebar"
     ></div>
     <transition name="fade">
       <aside class="absolute bg-gray-900 w-2/3 h-screen text-gray-500 p-5 z-50" v-show="showSidebar">
         <div class="flex justify-center">
-          <a
-            href="#"
+          <router-link
+            :to="{name: 'login'}"
             class="px-6 py-3 my-6 bg-teal-600 text-white text-sm font-semibold rounded-xl tracking-wide text-center hover:bg-teal-500"
-            >Sign Up / Log In</a
+            >Sign Up / Log In</router-link
           >
           <!-- Nav goes here -->
         </div>
@@ -47,7 +47,7 @@
       <slot />
     </main>
 
-    <footer class="flex justify-center py-2">
+    <footer class="flex justify-center py-2 font-semibold text-sm text-teal-800">
       @ Charlie the Programmer
     </footer>
   </div>
