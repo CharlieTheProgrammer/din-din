@@ -1,5 +1,5 @@
 <template>
-  <default-layout>
+  <default-layout :loading="loading">
     <RecipeListItem :recipe="finalRecipe"></RecipeListItem>
   </default-layout>
 </template>
@@ -18,12 +18,16 @@
 		name: "Recipe",
 		data() {
 			return {
-				finalRecipe: {}
+				finalRecipe: {},
+				loading: false
 			}
 		},
     async mounted() {
-			if (!this.recipe)
+			if (!this.recipe) {
+				this.loading = true;
 				this.finalRecipe = await Recipe.find('id', this.$route.params.id);
+				this.loading = false;
+			}
 			else 
 				this.finalRecipe = this.recipe
     }

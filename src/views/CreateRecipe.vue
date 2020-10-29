@@ -1,5 +1,5 @@
 <template>
-  <default-layout>
+  <default-layout :loading="loading">
     <div class="rounded-xl shadow-xl p-4 bg-teal-50">
       <div id="field-wrapper" class="mt-6">
         <label for="recipe" class="block text-2xl mb-2 text-gray-800">What are your favorite recipes?</label>
@@ -61,7 +61,8 @@
         name: "",
         isNameDirty: false,
         recipes: [],
-        meals: []
+        meals: [],
+        loading: true
       };
     },
     async mounted() {
@@ -72,6 +73,7 @@
           .orderByChild("user_id")
           .equalTo(window.user && window.user.id)
       );
+      this.loading = false;
     },
     methods: {
       async saveRecipe() {

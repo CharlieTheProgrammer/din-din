@@ -32,7 +32,7 @@
       <aside class="absolute bg-gray-900 w-2/3 h-screen text-gray-500 p-5 z-50" v-show="showSidebar">
         <div class="flex justify-center">
           <router-link
-            :to="{name: 'login'}"
+            :to="{ name: 'login' }"
             class="px-6 py-3 my-6 bg-teal-600 text-white text-sm font-semibold rounded-xl tracking-wide text-center hover:bg-teal-500"
             >Sign Up / Log In</router-link
           >
@@ -41,6 +41,17 @@
         <router-link to="/recipes" class="block mt-5 hover:text-gray-400 text-lg">My Recipes</router-link>
         <router-link to="/weekly-menu" class="block mt-5 hover:text-gray-400 text-lg">Menu of the Week</router-link>
       </aside>
+    </transition>
+
+    <transition name="slide">
+      <div id="loading" class="fixed top-0 left-0 w-full" v-if="loading">
+        <div class="flex flex-col justify-center items-center border bg-teal-600 min-h-screen">
+          <img src="../../assets/img/puff.svg" alt="Loading" width="150">
+          <span class="text-2xl mt-10 ml-3 cursor-pointer text-gray-200" @click="loading = false">
+            Loading...
+          </span>
+        </div>
+      </div>
     </transition>
 
     <main class="flex-1 flex flex-col">
@@ -56,6 +67,12 @@
 <script>
   import { firebase } from "../../providers/Fire";
   export default {
+    props: {
+      loading: {
+        type: Boolean,
+        default: false
+      }
+    },
     name: "Default-Layout",
     data() {
       return {
@@ -69,7 +86,7 @@
         if (window.user) return false;
         return true;
       }
-    }
+    }     
   };
 </script>
 
@@ -80,6 +97,15 @@
   }
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     @apply -translate-x-full;
+  }
+
+  /* .slide-enter-active, */
+  .slide-leave-active {
+    @apply transform transition-all ease-out duration-200;
+  }
+  /* .slide-enter */
+  .slide-leave-to /* .slide-leave-active below version 2.1.8 */ {
+    @apply -translate-y-full duration-1000;
   }
 
   .foodie-background {
