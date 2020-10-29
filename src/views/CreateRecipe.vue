@@ -16,7 +16,8 @@
       </div>
 
       <!-- Autocomplete Recipe -->
-      <div id="autocomplete">
+      <!-- Disabling for now since the API data sucks. Need to find a new provider. -->
+      <div id="autocomplete" v-if="false">
         <ul class="bg-white py-1" v-show="name.length > 0 && meals.length > 0">
           <li
             class="py-2 cursor-pointer hover:bg-gray-300 rounded overflow-hidden"
@@ -32,12 +33,12 @@
       </div>
 
       <div class="flex items-center mt-4 justify-around">
-        <button class="btn bg-secondary text-white" @click="saveRecipe">Add recipe</button>
         <router-link
           to="/recipes"
-          class="block px-4 py-3 rounded-lg border text-primary border-secondary-light bg-secondary-light hover:border-primary hover:bg-primary-light hover:text-primary"
-          >Done Adding Recipes</router-link
+          class="block btn btn-sm border border-teal-400"
+          >Done</router-link
         >
+        <button class="btn bg-secondary text-white" @click="saveRecipe">Add recipe</button>
       </div>
     </div>
 

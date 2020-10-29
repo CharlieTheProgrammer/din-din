@@ -73,11 +73,19 @@ export class BaseModel {
 		try {
 			const modelName = this.name.toLowerCase();
 			if (key && value) {
-				var snapshot = await db
-					.ref(modelName)
-					.orderByChild(key)
-					.equalTo(value)
-					.once('value');
+				if (key === 'id') {
+					var snapshot = await db
+						.ref(modelName)
+						.child(value)
+						.once('value');
+						return this.turnOneIntoModel(snapshot.toJSON(), value);
+				}
+				else
+					var snapshot = await db
+						.ref(modelName)
+						.orderByChild(key)
+						.equalTo(value)
+						.once('value');
 			} else {
 				var snapshot = await db.ref(modelName).once('value');
 			}
