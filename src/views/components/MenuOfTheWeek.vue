@@ -16,16 +16,16 @@
                 <thead>
                   <tr>
                     <th
-                      class="px-4 md:px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium uppercase tracking-wider"
+                      class="px-4 md:px-6 py-3 bg-white text-left text-xs leading-4 font-medium uppercase tracking-wider"
                     >
                       Day
                     </th>
                     <th
-                      class="px-4 md:px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium uppercase tracking-wider"
+                      class="px-4 md:px-6 py-3 bg-white text-left text-xs leading-4 font-medium uppercase tracking-wider"
                     >
                       Dinner
                     </th>
-                    <th class="px-4 md:px-6 py-3 bg-gray-50"></th>
+                    <th class="px-4 md:px-6 py-3 bg-white"></th>
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -83,7 +83,7 @@
       </div>
 
       <div class="flex justify-between mt-4">
-        <router-link :to="{ name: 'dashboard' }" class="btn btn-sm text-xs bg-teal-600 text-white">
+        <router-link :to="{ name: 'dashboard' }" class="btn btn-sm text-xs bg-teal-600 text-white px-8">
           Add Recipes</router-link
         >
         <button type="button" class="btn btn-sm text-xs bg-teal-600 text-white" @click="getRandomMenu">
