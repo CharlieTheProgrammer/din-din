@@ -1,2 +1,2 @@
-# DinDine
+# DinDin
 A simple meal tracker written in VueJs and Firebase Firestore.
