@@ -1,4 +1,5 @@
 {
   "printWidth": 120,
-  "vueIndentScriptAndStyle": true
+  "vueIndentScriptAndStyle": true,
+  "tabWidth": 2
 }

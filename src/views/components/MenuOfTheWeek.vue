@@ -38,19 +38,33 @@
                       <td class="px-4 md:px-6 py-4 whitespace-no-wrap align-top">
                         <div class="flex items-center justify-start">
                           <div>
-                            <div class="text-sm leading-5 font-medium text-gray-900">{{ weeklyMenuItem.dayOfTheWeek }}:</div>
+                            <div class="text-sm leading-5 font-medium text-gray-900">
+                              {{ weeklyMenuItem.dayOfTheWeek }}:
+                            </div>
                             <div class="text-sm leading-5 text-gray-500">
                               <!-- jane.cooper@example.com -->
                             </div>
                           </div>
                         </div>
                       </td>
-                      <td class="px-4 md:px-6 md:whitespace-no-wrap" v-if="editableMap[index] || Object.keys(weeklyMenuItem.recipe).length === 0">
-                        <select id="meal" class="mt-1 block form-select w-full py-2 px-02 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                         v-model="weeklyMenuItem.recipe"
-                         @input="$set(editableMap, index, false)">
+                      <td
+                        class="px-4 md:px-6 md:whitespace-no-wrap"
+                        v-if="editableMap[index] || Object.keys(weeklyMenuItem.recipe).length === 0"
+                      >
+                        <select
+                          id="meal"
+                          class="mt-1 block form-select w-full py-2 px-02 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                          v-model="weeklyMenuItem.recipe"
+                          @input="$set(editableMap, index, false)"
+                        >
                           <option :value="{}"></option>
-                          <option v-for="recipe in recipes" :key="`${recipe.name}-index`" :value="recipe" class="py-0">{{ recipe.name }}</option>
+                          <option
+                            v-for="recipe in recipes"
+                            :key="`${recipe.name}-index`"
+                            :value="recipe"
+                            class="py-0"
+                            >{{ recipe.name }}</option
+                          >
                         </select>
                       </td>
                       <td class="px-4 md:px-6 py-4 md:whitespace-no-wrap" v-else>
@@ -72,7 +86,12 @@
                       </td>
 
                       <td class="px-4 md:px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900" @click="$set(editableMap, index, !editableMap[index])">Edit</a>
+                        <a
+                          href="#"
+                          class="text-indigo-600 hover:text-indigo-900"
+                          @click="$set(editableMap, index, !editableMap[index])"
+                          >Edit</a
+                        >
                       </td>
                     </tr>
                   </template>
@@ -84,10 +103,7 @@
       </div>
 
       <div class="flex justify-between mt-4">
-        <router-link 
-          :to="{ name: 'create-recipe' }" 
-          class="btn btn-sm text-xs bg-teal-600 text-white px-8"
-        >
+        <router-link :to="{ name: 'create-recipe' }" class="btn btn-sm text-xs bg-teal-600 text-white px-8">
           Add Recipes</router-link
         >
         <button type="button" class="btn btn-sm text-xs bg-teal-600 text-white" @click="getRandomMenu">
@@ -152,47 +168,47 @@
         },
         weeklyMenuItemsTemplate: [
           {
-        		dayOfTheWeekId: 1,
-        		dayOfTheWeek: 'Monday',
-        		weekOfTheYear: 0,
-        		recipe: {}
+            dayOfTheWeekId: 1,
+            dayOfTheWeek: "Monday",
+            weekOfTheYear: 0,
+            recipe: {}
           },
           {
-        		dayOfTheWeekId: 2,
-        		dayOfTheWeek: 'Tuesday',
-        		weekOfTheYear: 0,
-        		recipe: {}
+            dayOfTheWeekId: 2,
+            dayOfTheWeek: "Tuesday",
+            weekOfTheYear: 0,
+            recipe: {}
           },
           {
-        		dayOfTheWeekId: 3,
-        		dayOfTheWeek: 'Wednesday',
-        		weekOfTheYear: 0,
-        		recipe: {}
+            dayOfTheWeekId: 3,
+            dayOfTheWeek: "Wednesday",
+            weekOfTheYear: 0,
+            recipe: {}
           },
           {
-        		dayOfTheWeekId: 4,
-        		dayOfTheWeek: 'Thursday',
-        		weekOfTheYear: 0,
-        		recipe: {}
+            dayOfTheWeekId: 4,
+            dayOfTheWeek: "Thursday",
+            weekOfTheYear: 0,
+            recipe: {}
           },
           {
-        		dayOfTheWeekId: 5,
-        		dayOfTheWeek: 'Friday',
-        		weekOfTheYear: 0,
-        		recipe: {}
+            dayOfTheWeekId: 5,
+            dayOfTheWeek: "Friday",
+            weekOfTheYear: 0,
+            recipe: {}
           },
           {
-        		dayOfTheWeekId: 6,
-        		dayOfTheWeek: 'Saturday',
-        		weekOfTheYear: 0,
-        		recipe: {}
+            dayOfTheWeekId: 6,
+            dayOfTheWeek: "Saturday",
+            weekOfTheYear: 0,
+            recipe: {}
           },
           {
-        		dayOfTheWeekId: 0,
-        		dayOfTheWeek: 'Sunday',
-        		weekOfTheYear: 0,
-        		recipe: {}
-          },
+            dayOfTheWeekId: 0,
+            dayOfTheWeek: "Sunday",
+            weekOfTheYear: 0,
+            recipe: {}
+          }
         ],
         weeklyMenu: {
           user_id: null,
@@ -201,31 +217,29 @@
           created_at: null
         },
         recipes: [],
-        editableMap: [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-        ],
+        editableMap: [false, false, false, false, false, false, false],
         weeklyMenus: [],
         loading: true
       };
     },
     async created() {
       await this.$bind("recipes", db.collection("recipe").where("user_id", "==", window.user && window.user.id));
-      await this.$bind("weeklyMenus", db.collection("weeklymenu").where("user_id", "==", window.user && window.user.id).orderBy("created_at", "desc"));
+      await this.$bind(
+        "weeklyMenus",
+        db
+          .collection("weeklymenu")
+          .where("user_id", "==", window.user && window.user.id)
+          .orderBy("created_at", "desc")
+      );
 
       if (this.weeklyMenus.length === 0 || DateTime().week() > this.latestWeeklyMenu.weekOfTheYear) {
-        console.log('No menus found, creating a new one');
-        let weeklyMenu = new WeeklyMenu({items: [...this.weeklyMenuItemsTemplate]});
+        console.log("No menus found, creating a new one");
+        let weeklyMenu = new WeeklyMenu({ items: [...this.weeklyMenuItemsTemplate] });
         await weeklyMenu.save();
         this.weeklyMenu = this.latestWeeklyMenu;
       } else {
         console.log("Weekly menus found, selecting last one");
-        this.weeklyMenu = this.latestWeeklyMenu; 
+        this.weeklyMenu = this.latestWeeklyMenu;
       }
       this.loading = false;
       this.areRecipesEmpty();
@@ -238,11 +252,14 @@
     methods: {
       async saveWeeklyMenu(weeklyMenu) {
         try {
-          if (weeklyMenu['.key']) {
-            await db.collection('weeklymenu').doc(weeklyMenu['.key']).set(db.serialize(weeklyMenu));
+          if (weeklyMenu[".key"]) {
+            await db
+              .collection("weeklymenu")
+              .doc(weeklyMenu[".key"])
+              .set(db.serialize(weeklyMenu));
           } else {
-            const menu = new WeeklyMenu({items: weeklyMenu}); 
-            await db.collection('weeklymenu').add(db.serialize(menu));
+            const menu = new WeeklyMenu({ items: weeklyMenu });
+            await db.collection("weeklymenu").add(db.serialize(menu));
             this.weeklyMenu = this.latestWeeklyMenu;
           }
         } catch (error) {
@@ -257,7 +274,7 @@
         const numberOfDaysInWeek = 7;
         for (let index = 0; index < Math.min(numberOfDaysInWeek, this.recipes.length); index++) {
           const randomRecipe = recipes[Math.floor(Math.random() * recipes.length)];
-    
+
           // Do not show the same recipe twice!
           recipes = recipes.filter(recipe => recipe[".key"] !== randomRecipe[".key"]);
 
@@ -270,8 +287,8 @@
             });
           else
             this.$set(this.weeklyMenu.items, index, {
-              dayOfTheWeekId: index+1,
-              dayOfTheWeek: this.dayNameLookupById[index+1],
+              dayOfTheWeekId: index + 1,
+              dayOfTheWeek: this.dayNameLookupById[index + 1],
               recipe: randomRecipe
             });
         }
@@ -300,10 +317,13 @@
       }
     },
     watch: {
-      weeklyMenu: { 
-        handler: async function (menu) {
-          if (menu && menu['.key']) {
-            await db.collection('weeklymenu').doc(menu['.key']).set(db.serialize(menu));
+      weeklyMenu: {
+        handler: async function(menu) {
+          if (menu && menu[".key"]) {
+            await db
+              .collection("weeklymenu")
+              .doc(menu[".key"])
+              .set(db.serialize(menu));
           }
         },
         immediate: false,

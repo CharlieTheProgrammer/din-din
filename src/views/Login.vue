@@ -165,7 +165,7 @@
           this.loginError = false;
           this.$router.push("/dashboard");
         } catch (error) {
-          if (error.code.includes('auth')) {
+          if (error.code.includes("auth")) {
             this.loginError = true;
           }
           console.log(error);
