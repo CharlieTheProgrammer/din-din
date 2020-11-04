@@ -39,7 +39,12 @@
             class="block btn btn-sm border border-teal-400 text-white px-6 tracking-wider bg-teal-400 hover:bg-teal-800 hover:border-teal-600"
             >Done</router-link
           >
-          <button class="btn bg-secondary-light border border-secondary text-gray-800 hover:bg-secondary hover:text-white" @click="saveRecipe">Add recipe</button>
+          <button
+            class="btn bg-secondary-light border border-secondary text-gray-800 hover:bg-secondary hover:text-white"
+            @click="saveRecipe"
+          >
+            Add recipe
+          </button>
         </div>
       </div>
 
@@ -57,7 +62,7 @@
   import { slice, debounce } from "lodash";
 
   export default {
-    name: "CreateRecipe",
+    name: "create-recipe",
     data() {
       return {
         name: "",
@@ -68,14 +73,13 @@
       };
     },
     async mounted() {
-      await this.$rtdbBind(
+      await this.$bind(
         "recipes",
         db
-          .ref("recipe")
-          .orderByChild("user_id")
-          .equalTo(window.user && window.user.id)
+          .collection("recipe")
+          .where("user_id", "==", window.user && window.user.id)
+          .orderBy("created_at", "desc")
       );
-      this.loading = false;
     },
     methods: {
       async saveRecipe() {
@@ -122,6 +126,9 @@
       async name(val) {
         if (this.isNameDirty == false) await this.getMealNames(val);
         this.isNameDirty = true;
+      },
+      recipes() {
+        this.loading = false;
       }
     }
   };

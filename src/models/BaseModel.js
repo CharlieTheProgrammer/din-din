@@ -59,7 +59,7 @@ export class BaseModel {
 	static async deleteOne(doc) {
 		try {
 			const modelName = this.name.toLowerCase();
-			return db.ref(modelName + '/' + doc['.key']).remove();
+			return db.collection(modelName).doc(doc['.key']).remove();
 		} catch (error) {
 			console.log('Error occured while performing operation', error);
 		}
@@ -74,24 +74,38 @@ export class BaseModel {
 			const modelName = this.name.toLowerCase();
 			if (key && value) {
 				if (key === 'id') {
-					var snapshot = await db
-						.ref(modelName)
-						.child(value)
-						.once('value');
-						return this.turnOneIntoModel(snapshot.toJSON(), value);
+					var result = await db
+						.collection(modelName)
+						.doc(id)
+						.get()
+					return this.turnOneIntoModel(result.data(), value);
 				}
 				else
 					var snapshot = await db
-						.ref(modelName)
-						.orderByChild(key)
-						.equalTo(value)
-						.once('value');
+						.collection(modelName)
+
+						
 			} else {
-				var snapshot = await db.ref(modelName).once('value');
+				var snapshot = await db.collection(modelName).get();
 			}
-			return this.turnAllIntoModels(snapshot.toJSON());
+			return this.turnAllIntoModels(snapshot.data());
 		} catch (error) {
 			console.log('Error occured while performing operation', error);
+		}
+	}
+
+	static async where(field, operand, value) {
+		try {
+			const modelName = this.name.toLowerCase();
+			// Field is an array, then parse and add multiple where
+			// if (isArray(field)) {
+
+			// } else {
+
+			// }
+			return db.collection(modelName).where(field, operand, value);
+		} catch (error) {
+			
 		}
 	}
 
@@ -113,7 +127,7 @@ export class BaseModel {
 	static async insert(docs) {
 		try {
 			const modelName = this.name.toLowerCase();
-			let promises = docs.map((item) => db.ref(modelName).push(docs));
+			let promises = docs.map((item) => db.collection(modelName).push(docs));
 			return Promise.all(promises);
 		} catch (error) {
 			console.log('Error occured while performing operation', error);
@@ -126,7 +140,7 @@ export class BaseModel {
 	static async insertOne(doc) {
 		try {
 			const modelName = this.name.toLowerCase();
-			return db.ref(modelName).push(doc);
+			return db.collection(modelName).add({...doc});
 		} catch (error) {
 			console.log('Error occured while performing operation', error);
 		}
@@ -150,7 +164,7 @@ export class BaseModel {
 		try {
 			if (!doc['.key']) throw Error('Cannot update due to missing key.', doc);
 			const modelName = this.name.toLowerCase();
-			return db.ref(modelName + '/' + doc['.key']).set(doc);
+			return db.collection(modelName).doc(doc['.key']).set(doc);
 		} catch (error) {
 			console.log('Error occured while performing operation', error);
 		}

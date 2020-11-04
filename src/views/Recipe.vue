@@ -25,7 +25,7 @@
     async mounted() {
 			if (!this.recipe) {
 				this.loading = true;
-				this.finalRecipe = await Recipe.find('id', this.$route.params.id);
+				this.finalRecipe = await Recipe.where('id', '==', this.$route.params.id);
 				this.loading = false;
 			}
 			else 

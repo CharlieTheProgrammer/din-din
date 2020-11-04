@@ -9,7 +9,7 @@ import isObject from 'lodash/isObject';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import * as validationRules from './providers/Validations';
 
-import { rtdbPlugin } from 'vuefire';
+import { firestorePlugin } from 'vuefire';
 import { Models } from './models';
 
 
@@ -56,16 +56,16 @@ requireComponent.keys().forEach((fileName) => {
 // Serialize function for vuefire
 // This will run through data returned from firebase and convert it to the appropriate model
 const serialize = (snapshot) => {
-	const modelName = snapshot.ref.parent.key; // This will  get "recipe"
-	const value = snapshot.val();
-	// if the value is a primitive, we create an object instead and assign the .value
-	let doc = isObject(value) ? value : Object.defineProperty({}, '.value', { value });
-
+  // snapshot.data() DOES NOT contain the `id` of the document. By
+  // default, Vuefire adds it as a non enumerable property named id.
+  // This allows to easily create copies when updating documents, as using
+	// the spread operator won't copy it
+	// debugger;
+	const modelName = snapshot.ref.parent.id; // This will  get "recipe"
 	if (!Models[modelName]) throw Error(`Model name '${modelName}' not found. Check the spelling and/or confirm the model is registered correctly.`);
-	return Models[modelName].turnOneIntoModel(doc, snapshot.key);
-};
-
-Vue.use(rtdbPlugin, { serialize });
+	return Models[modelName].turnOneIntoModel(snapshot.data(), snapshot.id);
+}
+Vue.use(firestorePlugin, {serialize});
 Vue.use(Autocomplete);
 
 Vue.config.productionTip = false;
