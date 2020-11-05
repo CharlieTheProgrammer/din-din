@@ -13,6 +13,7 @@ import { firestorePlugin } from "vuefire";
 import { Models } from "./models";
 
 import "./assets/css/index.css";
+import "./registerServiceWorker";
 
 // Globally Register Components
 const requireComponent = require.context(
