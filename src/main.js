@@ -65,7 +65,6 @@ const serialize = snapshot => {
   return Models[modelName].turnOneIntoModel(snapshot.data(), snapshot.id);
 };
 Vue.use(firestorePlugin, { serialize });
-Vue.use(Autocomplete);
 
 Vue.config.productionTip = false;
 
