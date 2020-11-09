@@ -66,7 +66,7 @@
                       >
                       <input
                         id="password"
-                        type="text"
+                        type="password"
                         autocomplete="off"
                         value=""
                         class="relative w-full bg-transparent outline-none px-1 py-3 z-10"
