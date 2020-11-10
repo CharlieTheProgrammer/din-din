@@ -1,11 +1,13 @@
 <template>
   <default-layout :loading="loading">
-    <RecipeListItem :recipe="finalRecipe"></RecipeListItem>
+    <RecipeListItem :recipe="finalRecipe" :showEditor="true"></RecipeListItem>
   </default-layout>
 </template>
 
 <script>
+  import { db } from "../providers/Fire";
   import { Recipe } from "../models/Recipe";
+  import isEmpty from "lodash/isEmpty";
 
   export default {
     props: {
@@ -23,9 +25,9 @@
       };
     },
     async mounted() {
-      if (!this.recipe) {
+      if (isEmpty(this.recipe)) {
         this.loading = true;
-        this.finalRecipe = await Recipe.where("id", "==", this.$route.params.id);
+        await this.$bind('finalRecipe', db.collection('recipe').doc(this.$route.params.id));
         this.loading = false;
       } else this.finalRecipe = this.recipe;
     }

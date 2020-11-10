@@ -44,7 +44,7 @@
     </transition>
 
     <transition name="slide">
-      <div id="loading" class="fixed top-0 left-0 w-full" v-if="loading">
+      <div id="loading" class="fixed top-0 left-0 w-full z-50" v-if="loading">
         <div class="flex flex-col justify-center items-center border bg-teal-600 min-h-screen">
           <img src="../../assets/img/puff.svg" alt="Loading" width="150" />
           <span class="text-2xl mt-10 ml-3 cursor-pointer text-gray-200" @click="loading = false">
