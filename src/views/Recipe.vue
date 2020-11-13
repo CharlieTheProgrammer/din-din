@@ -6,7 +6,6 @@
 
 <script>
   import { db } from "../providers/Fire";
-  import { Recipe } from "../models/Recipe";
   import isEmpty from "lodash/isEmpty";
 
   export default {

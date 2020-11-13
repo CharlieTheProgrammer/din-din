@@ -1,46 +1,41 @@
 import { db, auth } from "../providers/Fire";
-// I could import recipe and then do new Recipe() in createRecipe.
+// I could import recipe and then do new WeeklyMenu() in createWeeklyMenu.
 // However, Delaney advises simply leaving unfilled properties missing.
 // When searching on Firebase, this will be equivalent to false. Additionally, this
 // saves data.
 
-const modelName = "recipe";
+const modelName = "weekly-menu";
 
-const RecipeService = {
-  rawCollection: () => {
-    return db.collection(modelName);
-  },
-
-  createRecipe: async recipe => {
+const WeeklyMenuService = {
+  createWeeklyMenu: async weekly_menu => {
     const user = await auth.currentUser;
     return db.collection(modelName).add({
-      ...recipe,
+      ...weekly_menu,
       user_id: user.uid
     });
   },
 
-  getRecipeById: async recipe_id => {
-    debugger;
+  getWeeklyMenuById: async weekly_menu_id => {
     const doc = await db
       .collection(modelName)
-      .doc(recipe_id)
+      .doc(weekly_menu_id)
       .get();
     return doc.exists ? doc.data() : false;
   },
 
-  updateRecipe: async (recipe, recipe_id) => {
+  updateWeeklyMenu: async (weekly_menu, weekly_menu_id) => {
     return db
       .collection(modelName)
-      .doc(recipe_id)
-      .set(recipe);
+      .doc(weekly_menu_id)
+      .set(weekly_menu);
   },
 
-  deleteRecipe: async recipe_id => {
+  deleteWeeklyMenu: async weekly_menu_id => {
     return db
       .collection(modelName)
-      .doc(recipe_id)
+      .doc(weekly_menu_id)
       .delete();
   }
 };
 
-export default RecipeService;
+export default WeeklyMenuService;

@@ -56,7 +56,7 @@
 </template>
 
 <script>
-  import { Recipe } from "../models/Recipe";
+  import RecipeService from "../services/RecipeService";
   import { db } from "../providers/Fire";
   import axios from "../providers/Http";
   import { slice, debounce } from "lodash";
@@ -85,7 +85,7 @@
       async saveRecipe() {
         try {
           if (this.name === "") return;
-          new Recipe(this.name).save();
+          RecipeService.createRecipe(new Recipe(this.name));
           this.name = "";
         } catch (error) {
           console.log(error);

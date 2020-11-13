@@ -102,7 +102,6 @@
 </template>
 
 <script>
-  import { Recipe } from "../../models/Recipe";
   import RecipeService from "../../services/RecipeService";
   import tinymce from "vue-tinymce-editor";
   import Editor from "@tinymce/tinymce-vue";

@@ -146,8 +146,8 @@
 
 <script>
   import { db } from "../../providers/Fire";
-  import { Recipe } from "../../models/Recipe";
   import { WeeklyMenu } from "../../models/WeeklyMenu";
+  import WeeklyMenuService from "../../services/WeeklyMenuService";
   import { DateTime } from "../../providers/DateTime";
   import startCase from "lodash/startCase";
   import filter from "lodash/filter";
@@ -235,7 +235,7 @@
       if (this.weeklyMenus.length === 0 || DateTime().week() > this.latestWeeklyMenu.weekOfTheYear) {
         console.log("No menus found, creating a new one");
         let weeklyMenu = new WeeklyMenu({ items: [...this.weeklyMenuItemsTemplate] });
-        await weeklyMenu.save();
+        await WeeklyMenuService.createWeeklyMenu(weeklyMenu);
         this.weeklyMenu = this.latestWeeklyMenu;
       } else {
         console.log("Weekly menus found, selecting last one");
@@ -253,13 +253,10 @@
       async saveWeeklyMenu(weeklyMenu) {
         try {
           if (weeklyMenu[".key"]) {
-            await db
-              .collection("weeklymenu")
-              .doc(weeklyMenu[".key"])
-              .set(db.serialize(weeklyMenu));
+            await WeeklyMenuService.updateWeeklyMenu(weeklyMenu, weeklyMenu[".key"]);
           } else {
             const menu = new WeeklyMenu({ items: weeklyMenu });
-            await db.collection("weeklymenu").add(db.serialize(menu));
+            await WeeklyMenuService.createWeeklyMenu(menu);
             this.weeklyMenu = this.latestWeeklyMenu;
           }
         } catch (error) {
@@ -320,10 +317,7 @@
       weeklyMenu: {
         handler: async function(menu) {
           if (menu && menu[".key"]) {
-            await db
-              .collection("weeklymenu")
-              .doc(menu[".key"])
-              .set(db.serialize(menu));
+            await WeeklyMenuService.updateWeeklyMenu(menu, menu[".key"]);
           }
         },
         immediate: false,
