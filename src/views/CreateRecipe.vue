@@ -18,16 +18,16 @@
 
         <!-- Autocomplete Recipe -->
         <!-- Disabling for now since the API data sucks. Need to find a new provider. -->
-        <div id="autocomplete" v-if="false">
+        <div id="autocomplete">
           <ul class="bg-white py-1" v-show="name.length > 0 && meals.length > 0">
             <li
               class="py-2 cursor-pointer hover:bg-gray-300 rounded overflow-hidden"
               v-for="meal in meals"
-              :key="meal.idMeal"
+              :key="meal.id"
               @click="selectRecipe(meal)"
             >
               <span class="pl-3">
-                {{ meal.strMeal }}
+                {{ meal.title | startCase }}
               </span>
             </li>
           </ul>
@@ -57,9 +57,11 @@
 
 <script>
   import RecipeService from "../services/RecipeService";
+  import { Recipe } from "../models/Recipe";
+  import SpoonacularApi  from "../providers/Recipes/Spoonacular";
   import { db } from "../providers/Fire";
   import axios from "../providers/Http";
-  import { slice, debounce } from "lodash";
+  import { slice, debounce, startCase } from "lodash";
 
   export default {
     name: "create-recipe",
@@ -85,31 +87,27 @@
       async saveRecipe() {
         try {
           if (this.name === "") return;
-          RecipeService.createRecipe(new Recipe(this.name));
+          await RecipeService.createRecipe(new Recipe(this.name));
           this.name = "";
         } catch (error) {
           console.log(error);
         }
       },
-      async getMealNames(name) {
+      async getMealNames() {
         try {
           debounce(
             async () => {
-              const results = await axios.get("/search.php", {
-                params: {
-                  s: name
-                }
-              });
+              const results = await SpoonacularApi.autocomplete(this.name);
               if (results) {
-                this.meals = slice(results.data.meals, 0, 11);
+                this.meals = results;
               } else {
                 this.meals = [];
               }
               this.isNameDirty = false;
             },
-            1000,
+            2000,
             {
-              leading: false
+              leading: false,
             }
           )();
         } catch (error) {
@@ -119,12 +117,17 @@
       selectRecipe(meal) {
         this.isNameDirty = true;
         this.meals = [];
-        this.name = meal.strMeal;
+        this.name = startCase(meal.title);
+      }
+    },
+    filters: {
+      startCase(input) {
+        return startCase(input);
       }
     },
     watch: {
       async name(val) {
-        if (this.isNameDirty == false) await this.getMealNames(val);
+        if (this.isNameDirty == false) await this.getMealNames();
         this.isNameDirty = true;
       },
       recipes() {
