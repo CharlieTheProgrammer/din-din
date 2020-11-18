@@ -60,7 +60,6 @@
   import { Recipe } from "../models/Recipe";
   import SpoonacularApi  from "../providers/Recipes/Spoonacular";
   import { db } from "../providers/Fire";
-  import axios from "../providers/Http";
   import { slice, debounce, startCase } from "lodash";
 
   export default {
