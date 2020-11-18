@@ -69,6 +69,16 @@
           </div>
         </div>
 
+        <!--  This is a different view that should only show up in certain routes. -->
+        <div class="flex flex-col" v-if="$route.name === 'recipe'">
+          <div>
+            <h1 class="cursor-pointer hover:text-secondary" @click="showVideos = !showVideos">
+              {{ showVideos ? "Hide" : "See" }} Recommended Videos for {{ recipe.name }}
+            </h1>
+          </div>
+          <video-list :recipeName="recipe.name" :showVideos="showVideos"></video-list>
+        </div>
+
         <div class="mt-4" v-if="showEditor">
           <span class="text-red-500 text-xs" v-show="length_error">Note is too long.</span>
           <div class="mt-2">
@@ -106,12 +116,14 @@
   import tinymce from "vue-tinymce-editor";
   import Editor from "@tinymce/tinymce-vue";
   import debounce from "lodash/debounce";
+  import VideoList from "./VideoList.vue";
 
   export default {
     name: "RecipeListItem",
     components: {
       editor: tinymce,
-      "tiny-editor": Editor
+      "tiny-editor": Editor,
+      VideoList
     },
     props: {
       recipe: {
@@ -145,7 +157,8 @@
         },
         isNoteDirty: false,
         length_error: false,
-        MAX_LENGTH: 500
+        MAX_LENGTH: 500,
+        showVideos: false
       };
     },
     methods: {
@@ -196,3 +209,17 @@
     }
   };
 </script>
+
+<style lang="css" scoped>
+  .apparition-enter-active,
+  .apparition-leave-active {
+    transition-duration: 0.3s;
+    transition-property: opacity;
+    transition-timing-function: ease;
+  }
+
+  .apparition-enter,
+  .apparition-leave-active {
+    opacity: 0;
+  }
+</style>
